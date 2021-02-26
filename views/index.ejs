@@ -23,15 +23,52 @@
     <!-- Title -->
     <div class="row title-row">
       <h1 class="title">
-        <span id="title-before">I bet</span>
-        <span id="title-middle">you won't</span>
-        <span id="title-after">even catch it</span>
+        <span id="title-before"></span>
+        <span id="title-middle"></span>
+        <span id="title-after"></span>
       </h1>
     </div>
   </div>
 </section>
 
+<section id="game-section">
+  <h2 id="game-level">Level 0</h2><br>
+  <div id="game-type-radio-group" class="btn-group radio-group" role="group" aria-label="Basic radio toggle button group">
+    <input type="radio" class="btn-check" name="btnradio" id="btn-word" autocomplete="off" value="word" checked>
+    <label class="btn btn-outline-dark" for="btn-word">Word</label>
+    <input type="radio" class="btn-check" name="btnradio" id="btn-lights" autocomplete="off" value="lights">
+    <label class="btn btn-outline-dark" for="btn-lights">Lights</label>
+    <input type="radio" class="btn-check" name="btnradio" id="btn-reviel" autocomplete="off" value="reviel">
+    <label class="btn btn-outline-dark" for="btn-reviel">Reviel</label>
+    <button class="btn btn-danger btn-lg" id="btn-start">START</button>
+  </div>
+  
+  <h3>
+    <span id="game-before">I bet you won't even catch it</span>
+    <span id="game-middle"></span>
+    <span id="game-after"></span>
+  </h3>
+  
+  <div class="form-group">
+    <textarea class="form-control" id="text-area-answer" rows="2" placeholder="Let's check what you pretend to catch"></textarea>
+    <button class="btn btn-outline-dark btn-lg" id="btn-check">CHECK</button>
+  </div>
 
+  <div id="div-result"> 
+    <h2 id="h2-result">Result: xx.x%</h2>
+  </div>
+</section>
 
+<footer id="footer">
+  <div class="socials">
+    <a class="socials-link" href="mailto:zineddine.bettouche.inbox@gmail.com">Gmail</a>
+    <a class="socials-link" target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/zineddine.bettouche">Facebook</a>
+    <a class="socials-link" target="_blank" rel="noopener noreferrer" href="https://www.twitter.com/ZineddineBtc">Twitter</a>
+    <a class="socials-link" target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/zneddine-bettouche">LinkedIn</a>
+    <a class="socials-link"target="_blank" rel="noopener noreferrer" href="https://www.github.com/ZineddineBtc">GitHub</a>
+  </div>
+  <p id="copyright">© Copyright 2021 Zineddine Bettouche</p>
+
+</footer>
 
 <%- include("partials/footer") %>
