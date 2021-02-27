@@ -1,3 +1,7 @@
+.nopadding {
+    padding: 0 !important;
+    margin: 0 !important;
+ }
 #header-section {
     background-color: #212529;
 }
@@ -30,11 +34,11 @@
 #title-before, #title-after {
     visibility: hidden;
 }
-#game-section {
+#section-game {
     margin: 5% 10%;
     text-align: center;
 }
-#game-level {
+#h2-points {
     background-color: #212529;
     font-family: 'Montserrat', sans-serif;
     font-size: 2rem;
@@ -44,19 +48,52 @@
     margin-bottom: 5%;
     display: inline-block;
 }
-#game-type-radio-group {
-    margin-bottom: 5%;
+#radio-group-game-type {
+    margin-bottom: 5% 5% 0;
 }
 #btn-start {
     padding: 5px 20px;
 }
+#div-game {
+    border: 1px #212529 solid;
+    border-radius: 2%;
+    width: 80%;
+    margin: 0 auto;
+    background-color: #212529;
+}
+#h3-game {
+    padding: 10% 4%;
+    color: #fff;
+    font-size: 3rem;
+}
 #game-before, #game-after {
     visibility: hidden;
 }
+#form-game {
+    margin: 0 auto;
+    width: 95.5%;
+}
 #text-area-answer {
-    width: 50%;
-    margin: 3% auto;
     text-align: center;
+    border: none;
+    border-radius: 0px;
+    border-top: 1px #fff solid;
+    background-color: #212529;
+    color: #fff;
+}
+#btn-check {
+    margin: 0 auto;
+    height: 100%;
+    width: 100%;
+    color: #fff;
+    border: none;
+    border-top: 1px #fff solid;
+    border-left: 1px #fff solid;
+    background-color: #212529;
+}
+#btn-check:hover {
+    background-color: #fff;
+    color: #212529;
 }
 #h2-result {
     margin: 3% auto;
@@ -82,6 +119,49 @@
     margin-top: 40px;
     color: #fff;
 }
+
+/***************************  index.ejs  ********************************/
+#section-input {
+    text-align: center;
+    margin: 7% 15%;
+}
+#h1-index {
+    margin-bottom: 5%;
+}
+#uploadForm {
+    width: 50%;
+    margin: 0 auto;
+}
+#input-index {
+    margin-bottom: 1%;
+    width: 100%;
+    background-color: #212529;
+    color: #fff;
+    padding: 5%;
+    text-align: center;
+    border-top-left-radius: 3%;
+    border-top-right-radius: 3%;
+}
+#button-upload {
+    width: 100%;
+    border-top-left-radius: 0%;
+    border-top-right-radius: 0%;
+}
+/***************************  viewer.ejs  ********************************/
+#p-viewer {
+    display: none;
+}
+
+/***************************  @media  ********************************/
+
+@media (max-width: 1048px) {
+    #div-game {
+        width: 100%;
+    }
+    #form-game {
+        width: 95%;
+    }
+}
 @media (max-width: 768px) {
     #global-container-fluid {
         padding: 1% 5%;
@@ -100,9 +180,19 @@
         font-size: 2rem;
         line-height: 1;
     }    
-    #text-area-answer {
+    #div-game {
         width: 100%;
-        margin: 3% auto;
-        text-align: center;
+    }
+    #h3-game {
+        font-size: 2rem;
+    }
+    #form-game {
+        width: 93%;
+    }
+    #title-index {
+        font-size: 2rem;
+    }
+    #uploadForm {
+        width: 90%;
     }
 }

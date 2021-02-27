@@ -36,14 +36,15 @@ const gameSentences = [
     "Hello you, how have you been these days?",
     "Never gonna give you up, never gonna let you down."
 ];
-var sentenceIndex = 0;
+var sentenceIndex = 0, points = 0;
 ////////////////////////       Start        //////////////////////////
 const speed = 150;
 var running = false;
-$("#btn-start").click(function() {
-    $("#game-before").text("");
-    running = true;
-    if(running){
+$("#btn-start").click(start);
+function start() {
+    $("#game-before").text(".");
+    if(!running){
+        running = true;
         if($('#btn-word').is(':checked')) {
             byWord();
         } else if($('#btn-lights').is(':checked')) {
@@ -52,7 +53,7 @@ $("#btn-start").click(function() {
             byReviel();
         }
     }
-});
+}
 function byWord() {
     var n = 0;
     var index = 0;
@@ -68,12 +69,13 @@ function byWord() {
             index++;
         } else {
             index = 0;
-            if(n < 2){
+            if(n < 3){
                 n++;
             } else {
                 $("#game-before").text("...");
                 $("#game-middle").text("");
                 clearInterval(wordInterval);
+                running = false;
             }
         }
     }, speed);
@@ -100,13 +102,14 @@ function byLights() {
             index++;
         } else {
             index = 0;
-            if(n < 2){
+            if(n < 3){
                 n++;
             } else {
                 $("#game-before").text("...");
                 $("#game-middle").text("");
                 $("#game-after").text("");
                 clearInterval(wordInterval);
+                running = false;
             }
         }
     }, speed);
@@ -128,27 +131,43 @@ function byReviel() {
         } else {
             index = 0;
             m = "";
-            if(n < 2){
+            if(n < 3){
                 n++;
             } else {
                 $("#game-before").text("...");
                 $("#game-middle").text("");
                 clearInterval(wordInterval);
+                running = false;
             }
         }
     }, speed*0.5);
 }
-$("#btn-check").click(function() {
+$("#btn-check").click(checkAnswer);
+function checkAnswer() {
     const sim = similarity(
         $("#text-area-answer").val(), gameSentences[sentenceIndex]) * 100;
     if(sim > 70) {
-        $("#h2-result").css("background-color", "green");
+        $("#h2-result").css("background-color", "#5cb85c");
+        sentenceIndex++;
+        points += sim.toFixed(1);
+        $("#h2-points").text("Points: "+points);
+        var t = 3;
+        const interval = window.setInterval(function(){
+            $("#btn-check").html(t);
+            if(t==1){
+                clearInterval(interval);
+                $("#btn-check").html("check");
+                start();
+            }else{
+                t--;
+            }
+        }, 700);
     }else {
-        $("#h2-result").css("background-color", "red");
+        $("#h2-result").css("background-color", "#d9534f");
     }
     $("#h2-result").css("color", "white");
     $("#h2-result").text("Result: "+ sim.toFixed(1) +"%");
-});
+}
 function similarity(s1, s2) {
     var longer, shorter;
     if (s1.length < s2.length) {
@@ -190,3 +209,4 @@ function editDistance(s1, s2) {
     }
     return costs[s2.length];
 }
+

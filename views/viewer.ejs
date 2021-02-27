@@ -22,18 +22,14 @@
     </nav>
     <!-- Title -->
     <div class="row title-row">
-      <h1 class="title" id="title-index"> Take your reading experience <br> to another level </h1>
+      <h1 class="title"> Take your reading experience <br> to another level </h1>
     </div>
   </div>
 </section>
 
-<section id="section-input">
-  <h1 id="h1-index">Upload PDF File</h1>
-  <form ref="uploadForm" id="uploadForm" action="/upload" 
-        method="post" encType="multipart/form-data" class="">
-      <input id="input-index" type="file" name="uploadedFile" /> <br>
-      <button disabled type="submit" class="btn btn-dark btn-lg" id="button-upload">UPLOAD</button>
-  </form>    
+<section id="section-reading">
+    <h1 id="h1-viewer"></h1>   
+    <p id="p-viewer"><%= text %></p>
 </section>
 
 <footer id="footer">
@@ -52,6 +48,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <!-- My jQuery -->
-<script type="text/javascript" src="javascript/index.js"></script>
+<script type="text/javascript" src="javascript/viewer.js"></script>
+
 
 <%- include("partials/footer") %>
