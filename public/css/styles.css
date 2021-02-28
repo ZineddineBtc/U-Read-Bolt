@@ -148,18 +148,37 @@
     border-top-right-radius: 0%;
 }
 /***************************  viewer.ejs  ********************************/
-#p-viewer {
-    display: none;
+#section-reading {
+    text-align: center;
+    margin: 7% 15%;
 }
-
+#radio-group-viewer-type {
+    width: 100%;
+}
+#btn-start-viewer {
+    width: 100%;
+}
+#div-dark-mode {
+    text-align: left;
+    margin-bottom: 1%;
+}
+#div-viewer {
+    border: 1px #212529 solid;
+    border-radius: 5px;
+    width: 100%;
+    padding: 7% 4%;
+}
 /***************************  @media  ********************************/
 
-@media (max-width: 1048px) {
+@media (max-width: 1024px) {
     #div-game {
         width: 100%;
     }
     #form-game {
         width: 95%;
+    }
+    #btn-start-viewer {
+        margin: 3% 0% 3%;
     }
 }
 @media (max-width: 768px) {

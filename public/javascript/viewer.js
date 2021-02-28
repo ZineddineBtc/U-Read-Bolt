@@ -16,6 +16,14 @@ function byWord() {
     }, speed);
 }
 
-byWord();
+$("#checkbox-dark-mode").change(function(){
+    if (this.checked) {
+        $("#div-viewer").css("background-color", "#212529");
+        $("#h1-viewer").css("color", "#fff");
+    } else {
+        $("#div-viewer").css("background-color", "#fff");
+        $("#h1-viewer").css("color", "#212529");
+    }
+});
 
 
