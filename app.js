@@ -42,10 +42,10 @@ app.post("/upload", function(req, res) {
                         if(!error){
                             fs.readFile(textPath, 'utf8', function(error, contents) {
                                 text = contents;
-                                fs.unlink(textPath, (error) => {
+                                /* fs.unlink(textPath, (error) => {
                                     if (error) throw error;
                                     console.log(textPath + " was deleted");
-                                });
+                                }); */
                                 res.render("viewer", {text: text});
                             });
                         } else {
