@@ -26,47 +26,27 @@
     </div>
   </div>
 </section>
-<div class="jumbotron jumbotron-fluid" style="padding: 7% 10%;">
-  <div class="container">
-    <h1 class="display-2" style="margin-bottom: 3%;">Get rid of zoning-out now!</h1>
-    <p class="lead" style="font-size: 1.5rem;">Your mind can recognize words way faster than what you think, however it can only put full concentration on what object.
-      <br>Therefore <strong><em>U-Read Bolt</em></strong> plays on that, and make you read your essays and books faster and more <strong>more efficiently</strong> 
-    </p>
-  </div>
-</div>
 
-<div class="jumbotron jumbotron-fluid" style="padding: 7% 10%; background-color: #212529;">
-  <div class="container">
-    <h1 class="display-3" style="margin-bottom: 3%; color: #fff;">Upload</h1>
-    <p class="lead" style="font-size: 1.5rem; color: #fff;">
-      Select a PDF file or even paste an essay, and start experiencing this clever way of reading.
-    </p>
-    <form action="/upload" method="get">
-      <button class="btn btn-outline-light" type="submit">To upload</button>
-    </form>
-  </div>
-</div>
-
-<div class="jumbotron jumbotron-fluid" style="padding: 7% 10%;">
-  <div class="container">
-    <h1 class="display-3" style="margin-bottom: 3%;">Challenge Yourself</h1>
-    <p class="lead" style="font-size: 1.5rem;">
-      Try our game and see for yourself how fast your mind can catch the full sentences that the game throws at you.
-    </p>
-    <form action="/game" method="get">
-      <button class="btn btn-outline-dark" type="submit">To the game</button>
-    </form>
-    <div style="text-align: center; margin-top: 7%;">
-      <h1 class="display-6" style="margin-bottom: 3%;">Register and save your progress</h1>
-      <form action="/login" method="get" style="display: inline-block;">
-        <button type="submit" class="btn btn-outline-dark btn-lg">Login</button>
-      </form>
-      <form action="/register" method="get" style="display: inline-block;">
-        <button type="submit" class="btn btn-dark btn-lg">Register</button>
+<section id="section-input">
+  <div class="row">
+    <div class="col-md-6">
+      <h1 id="h1-upload" class="h1-index">Upload PDF File</h1>
+      <form ref="uploadForm" action="/upload" id="form-upload"
+            method="post" encType="multipart/form-data">
+        <input id="input-upload" class="input-index" type="file" name="uploadedFile" accept=".pdf"/> <br>
+        <button disabled type="submit" class="btn btn-dark btn-lg btn-index" id="button-upload">UPLOAD</button>
       </form>
     </div>
-  </div>
-</div>
+    <div class="col-md-6">
+      <h1 id="h1-text" class="h1-index" style="color: #a9a9a9;">Or Enter Text</h1>
+      <form action="/text" method="post">
+        <textarea name="text" disabled class="input-index" id="textarea-index" placeholder="Write somthing..."></textarea> <br>
+        <button disabled type="submit" class="btn btn-dark btn-lg btn-index" id="button-read">READ</button>
+      </form>
+    </div>
+  </div>  
+</section>
+
 
 <footer id="footer">
     <div class="socials">
