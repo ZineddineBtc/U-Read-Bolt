@@ -26,51 +26,58 @@
     </div>
   </div>
 </section>
+<h1 class="h1-dark-mode">..........</h1>
 
 <p id="p-viewer" style="display: none;"><%= text %></p>
 
-<section id="section-reading">  
-    <div class="row">
-      <div class="col-lg-3">
-        <div class="input-group mb-3">
-          <span class="input-group-text" id="span-page">Page</span>
-          <input id="input-page" type="number" class="form-control" placeholder="0" aria-label="Page Number" aria-describedby="span-page" style="text-align: center;">
-        </div>
-      </div>
-      <div class="col-lg-3">
-        <div class="input-group mb-3" id="div-speed">
-          <span class="input-group-text" id="span-speed">Speed</span>
-          <button id="btn-decrease-speed" class="btn btn-outline-secondary" type="button">-</button>
-          <input  id="input-speed" type="number" class="form-control" value="6" placeholder="Word/s" aria-label="Page Number" aria-describedby="span-speed" style="text-align: center;">
-          <button id="btn-increase-speed" class="btn btn-outline-secondary" type="button">+</button>
-        </div>
-      </div>
-      <div class="col-lg-3">
-        <div id="radio-group-viewer-type" class="btn-group radio-group" role="group" aria-label="Basic radio toggle button group">
-          <input type="radio" class="btn-check" name="btnradio" id="btn-word-viewer" autocomplete="off" value="word" checked>
-          <label class="btn btn-outline-dark" for="btn-word">Word</label>
-          <input type="radio" class="btn-check" name="btnradio" id="btn-lights-viewer" autocomplete="off" value="lights">
-          <label class="btn btn-outline-dark" for="btn-lights">Lights</label>
-          <input type="radio" class="btn-check" name="btnradio" id="btn-reviel-viewer" autocomplete="off" value="reviel">
-          <label class="btn btn-outline-dark" for="btn-reviel">Reviel</label>
-        </div>
-      </div>
-      <div class="col-lg-3">
-        <button id="btn-start-viewer" class="btn btn-dark">START</button>
+<section id="section-reading" class="bgc-dark-mode">  
+  <div class="form-check form-switch" id="div-dark-mode">
+    <input class="form-check-input" type="checkbox" id="checkbox-dark-mode" />
+    <label id="label-dark-mode" class="form-check-label color-dark-mode" for="checkbox-dark-mode">Dark mode</label>
+  </div>
+  <div class="row">
+    <div class="col-lg-3">
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="span-page">Page</span>
+        <input id="input-page" type="number" class="form-control bgc-dark-mode color-dark-mode" value="1" aria-label="Page Number" aria-describedby="span-page" style="text-align: center;">
       </div>
     </div>
-    <div class="form-check form-switch" id="div-dark-mode">
-      <input class="form-check-input" type="checkbox" id="checkbox-dark-mode" />
-      <label class="form-check-label" for="checkbox-dark-mode">Dark mode</label>
+    <div class="col-lg-3">
+      <div class="input-group mb-3" id="div-speed">
+        <span class="input-group-text" id="span-speed">Speed</span>
+        <button id="btn-decrease-speed" class="btn-speed btn btn-outline-dark btn-outline-dark-mode" type="button">-</button>
+        <input  id="input-speed" type="number" class="form-control bgc-dark-mode color-dark-mode" value="6" placeholder="Word/s" aria-label="Page Number" aria-describedby="span-speed" style="text-align: center;">
+        <button id="btn-increase-speed" class="btn-speed btn btn-outline-dark btn-outline-dark-mode" type="button">+</button>
+      </div>
     </div>
+    <div class="col-lg-3">
+      <div id="radio-group-viewer-type" class="btn-group radio-group" role="group" aria-label="Basic radio toggle button group">
+        <input type="radio" class="btn-check" name="btnradio" id="btn-word-viewer" autocomplete="off" value="word" checked>
+        <label class="btn btn-outline-dark label-viewer-type btn-outline-dark-mode" for="btn-word-viewer">Word</label>
+        <input type="radio" class="btn-check" name="btnradio" id="btn-lights-viewer" autocomplete="off" value="lights">
+        <label class="btn btn-outline-dark label-viewer-type btn-outline-dark-mode" for="btn-lights-viewer">Lights</label>
+        <input type="radio" class="btn-check" name="btnradio" id="btn-reviel-viewer" autocomplete="off" value="reviel">
+        <label class="btn btn-outline-dark label-viewer-type btn-outline-dark-mode" for="btn-reviel-viewer">Reviel</label>  
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <button id="btn-start-viewer" class="btn btn-dark">START</button>
+    </div>
+  </div>
+  <div class="btn-group" role="group" aria-label="Basic example" style="margin-bottom: 1.5%; width: 100%;">
+    <button class="btn btn-outline-dark btn-go-back btn-outline-dark-mode" id="btn-go-to-page-beginning"><i class="fas fa-history"></i> Page Beginning</button>
+    <button class="btn btn-outline-dark btn-go-back btn-outline-dark-mode" id="btn-go-back-words"><i class="fas fa-step-backward"></i><span id="span-btn-go-back-words"></span></span></button>
+  </div>
 
-    <div id="div-viewer">
-      <h1 id="h1-viewer">...</h1> 
-    </div>
+  <div id="div-viewer" class="bgc-dark-mode">
+    <h1 id="h1-viewer" class="color-dark-mode">...</h1> 
+  </div>
   
 </section>
 
-<footer id="footer">
+<!-- <h1 class="h1-dark-mode">..........</h1> -->
+
+<footer id="footer" style="border-top: 1px #fff solid">
     <div class="socials">
       <a class="socials-link" href="mailto:zineddine.bettouche.inbox@gmail.com">Gmail</a>
       <a class="socials-link" target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/zineddine.bettouche">Facebook</a>

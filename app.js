@@ -22,6 +22,7 @@ app.get("/game", function(req, res){
     res.render("game");
 });
 
+var text = "empty";
 app.post("/upload", function(req, res) {
     if (!req.files || Object.keys(req.files).length === 0) {
       return res.status(400).send("No files were uploaded.");
@@ -42,11 +43,11 @@ app.post("/upload", function(req, res) {
                         if(!error){
                             fs.readFile(textPath, 'utf8', function(error, contents) {
                                 text = contents;
-                                /* fs.unlink(textPath, (error) => {
+                                fs.unlink(textPath, (error) => {
                                     if (error) throw error;
                                     console.log(textPath + " was deleted");
-                                }); */
-                                res.render("viewer", {text: text});
+                                }); 
+                                res.redirect("/read");
                             });
                         } else {
                             console.log(error);
@@ -61,6 +62,18 @@ app.post("/upload", function(req, res) {
         pdfParser.loadPDF(uploadPath);
         });
 });
+app.post("/text", function(req, res){
+    text = req.body.text;
+    res.redirect("/read");
+});
+
+app.get("/read", function(req, res){
+    if(text === "empty"){
+        res.redirect("/");
+    } else {
+        res.render("viewer", {text: text});
+    }
+}); 
 
 app.listen(3000, function(){
     console.log("Server running on port 3000");

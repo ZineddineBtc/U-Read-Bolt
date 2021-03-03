@@ -123,34 +123,42 @@
 /***************************  index.ejs  ********************************/
 #section-input {
     text-align: center;
-    margin: 7% 15%;
+    margin: 7% 10%;
 }
-#h1-index {
-    margin-bottom: 5%;
+.h1-index {
+    margin: 2% 0% 1%;
+    cursor: pointer;
 }
-#uploadForm {
-    width: 50%;
-    margin: 0 auto;
+.h1-index:hover {
+    text-decoration: underline;
 }
-#input-index {
-    margin-bottom: 1%;
+#textarea-index {
+    text-align: left;
+    margin-bottom: 0;
+    background-color: #6f7275;
+}
+.input-index {
+    margin: 1% 0%;
     width: 100%;
     background-color: #212529;
     color: #fff;
     padding: 5%;
     text-align: center;
-    border-top-left-radius: 3%;
-    border-top-right-radius: 3%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
-#button-upload {
+#form-upload {
+    height: 100%;
+}
+.btn-index {
     width: 100%;
-    border-top-left-radius: 0%;
-    border-top-right-radius: 0%;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 }
 /***************************  viewer.ejs  ********************************/
 #section-reading {
     text-align: center;
-    margin: 7% 15%;
+    padding: 7% 15%;
 }
 #radio-group-viewer-type {
     width: 100%;
@@ -167,6 +175,15 @@
     border-radius: 5px;
     width: 100%;
     padding: 7% 4%;
+}
+.h1-dark-mode {
+    color: #fff;
+    background-color: #212529;
+    padding: 0;
+    margin: 0 auto;
+    text-align: center;
+    visibility: hidden;
+    font-size: 2rem;
 }
 /***************************  @media  ********************************/
 
@@ -213,5 +230,8 @@
     }
     #uploadForm {
         width: 90%;
+    }
+    #h1-text {
+        margin-top: 5%;
     }
 }

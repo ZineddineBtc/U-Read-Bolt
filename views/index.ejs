@@ -26,15 +26,26 @@
     </div>
   </div>
 </section>
-
 <section id="section-input">
-  <h1 id="h1-index">Upload PDF File</h1>
-  <form ref="uploadForm" id="uploadForm" action="/upload" 
-        method="post" encType="multipart/form-data" class="">
-      <input id="input-index" type="file" name="uploadedFile" /> <br>
-      <button disabled type="submit" class="btn btn-dark btn-lg" id="button-upload">UPLOAD</button>
-  </form>    
+  <div class="row">
+    <div class="col-md-6">
+      <h1 id="h1-upload" class="h1-index">Upload PDF File</h1>
+      <form ref="uploadForm" action="/upload" id="form-upload"
+            method="post" encType="multipart/form-data">
+        <input id="input-upload" class="input-index" type="file" name="uploadedFile" accept=".pdf"/> <br>
+        <button disabled type="submit" class="btn btn-dark btn-lg btn-index" id="button-upload">UPLOAD</button>
+      </form>
+    </div>
+    <div class="col-md-6">
+      <h1 id="h1-text" class="h1-index" style="color: #a9a9a9;">Or Enter Text</h1>
+      <form action="/text" method="post">
+        <textarea name="text" disabled class="input-index" id="textarea-index" placeholder="Write somthing..."></textarea> <br>
+        <button disabled type="submit" class="btn btn-dark btn-lg btn-index" id="button-read">READ</button>
+      </form>
+    </div>
+  </div>  
 </section>
+
 
 <footer id="footer">
     <div class="socials">
