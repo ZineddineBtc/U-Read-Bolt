@@ -148,7 +148,7 @@ app.get("/read", function(req, res){
             {isAuthenticated: false, name: null, text: text}); 
         } else {
             res.render("viewer", 
-            {isAuthenticated: false, name: null, text: text}); 
+            {isAuthenticated: true, name: req.user.name, text: text}); 
         }
     }
 }); 
@@ -176,8 +176,6 @@ app.post("/login", passport.authenticate("local",{
 }), function(req, res){
     
 });
-
-
 
 app.listen(3000, function(){
     console.log("Server running on port 3000");
