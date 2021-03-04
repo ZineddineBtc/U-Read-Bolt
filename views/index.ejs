@@ -3,23 +3,11 @@
 <section id="header-section">
   <div class="container-fluid" id="global-container-fluid">
     <!-- Nav Bar -->
-    <nav class="navbar navbar-dark" id="navbar">
-      <div class="container-fluid" style="padding:0;">
-        <a class="navbar-brand" id="nav-brand" target="_blank" rel="noopener noreferrer" href="https://zineddinebtc.github.io/my-portfolio/">U-Read Bolt</a>
-        <ul class="navbar-nav ms-auto list-group list-group-horizontal">
-          <li class="nav-item">
-            <form action="/login" method="get">
-              <button type="submit" class="btn btn-outline-light">Login</button>
-            </form>
-          </li>
-          <li class="nav-item">
-            <form action="/register" method="get">
-              <button type="submit" class="btn btn-light">Register</button>
-            </form>
-          </li>
-        </ul>
-      </div>
-    </nav>
+    <% if(!isAuthenticated) { %>
+      <%- include("partials/nav-unsigned") %>
+    <% } else { %>
+      <%- include("partials/nav-signed") %>
+    <% } %>
     <!-- Title -->
     <div class="row title-row">
       <h1 class="title" id="title-index"> Take your reading experience <br> to another level </h1>
@@ -56,8 +44,8 @@
     <form action="/game" method="get">
       <button class="btn btn-outline-dark" type="submit">To the game</button>
     </form>
-    <div style="text-align: center; margin-top: 7%;">
-      <h1 class="display-6" style="margin-bottom: 3%;">Register and save your progress</h1>
+    <div style="text-align: center; margin-top: 10%;">
+      <h1 class="display-6" style="margin-bottom: 5%;">Register and save your progress</h1>
       <form action="/login" method="get" style="display: inline-block;">
         <button type="submit" class="btn btn-outline-dark btn-lg">Login</button>
       </form>

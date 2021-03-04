@@ -1,5 +1,29 @@
-/***************************  index.ejs  ********************************/
-
+/***************************  login & register  ********************************/
+.div-container {
+    padding: 3% 10%;
+    text-align: center;
+    margin: 0 auto;
+    background-color: #eee;
+}
+.sign-form {
+    margin: 0 auto;
+    width: 400px;
+    padding: 50px;
+    border: 1px #ddd solid;
+    border-radius: 10px;
+    background: #212529;
+}
+#input-email-register {
+    border-radius: 0;
+}
+#input-email-login, #input-name {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.input-password {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+}
 
 /***************************  game.ejs  ********************************/
 .nopadding {

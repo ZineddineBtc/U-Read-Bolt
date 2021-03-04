@@ -1,77 +1,97 @@
 //jshint esversion:6
 require("dotenv").config();
+const fs = require("fs");
 const express = require("express");
+const session = require("express-session");
 const fileUpload = require("express-fileupload");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const mongoose = require("mongoose");
-const fs = require("fs");
-const PDFParser = require("./node_modules/pdf2json/PDFParser");
-const session = require("express-session");
+const findOrCreate = require("mongoose-findorcreate");
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
-const findOrCreate = require("mongoose-findorcreate");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user");
+const PDFParser = require("./node_modules/pdf2json/PDFParser");
+
+mongoose.connect("mongodb://localhost:27017/userDB", {useNewUrlParser: true});
+mongoose.set("useCreateIndex", true);
 
 const app = express();
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(fileUpload());
 app.set("view engine", "ejs");
-
+app.use(fileUpload());
 app.use(session({
     secret: process.env.SECRET,
     resave: false,
     saveUninitialize: false
 }));
-
 app.use(passport.initialize());
 app.use(passport.session());
 
-mongoose.connect("mongodb://localhost:27017/userDB", {useNewUrlParser: true});
-mongoose.set("useCreateIndex", true);
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
-const userSchema = new mongoose.Schema({
-    email: String,
-    password: String,
-    googleId: String
-});
-
-userSchema.plugin(passportLocalMongoose);
-userSchema.plugin(findOrCreate);
-
-const User = mongoose.model("user", userSchema);
-
-passport.use(User.createStrategy());
-passport.serializeUser(function(user, done) {done(null, user.id);});
-passport.deserializeUser(function(id, done) {
-  User.findById(id, function(err, user) {done(err, user);});
-});
 passport.use(new GoogleStrategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/secrets",
+    callbackURL: "http://localhost:3000/auth/google/index",
     passReqToCallback: true,
-    userProfileURL: "https://googleapis.com/oauth2/v3/userinfo"
-  },
-  function(request, accessToken, refreshToken, profile, done) {
-    User.findOrCreate({ googleId: profile.id }, function (err, user) {
-      return done(err, user);
-    });
+    userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
+},
+    function(request, accessToken, refreshToken, profile, done) {
+        User.findOrCreate({
+            username: profile.emails[0].value, 
+            googleId: profile.id,
+            name: profile.displayName
+        }, function (err, user) {return done(err, user);});
   }
 ));
 
 app.get("/", function(req, res){
-    res.render("index"); 
+    if(!req.isAuthenticated()){
+        res.render("index", {isAuthenticated: false, name: null}); 
+    } else {
+        res.render("index", {isAuthenticated: true, name: req.user.name});
+    } 
 });
+
+app.get("/login", function(req, res){
+    res.render("login"); 
+});
+
+app.get("/register", function(req, res){
+    res.render("register"); 
+});
+
+app.get("/auth/google", passport.authenticate("google", {
+    scope: ['https://www.googleapis.com/auth/userinfo.profile',
+             'https://www.googleapis.com/auth/userinfo.email']
+}));
+
+app.get( "/auth/google/index",
+    passport.authenticate( "google", {
+        successRedirect: "/",
+        failureRedirect: "/login"
+}));
 
 app.get("/upload", function(req, res){
-    res.render("upload"); 
+    if(!req.isAuthenticated()){
+        res.render("upload", {isAuthenticated: false, name: null}); 
+    } else {
+        res.render("upload", {isAuthenticated: true, name: req.user.name});
+    }
 });
 
-
 app.get("/game", function(req, res){
-    res.render("game");
+    if(!req.isAuthenticated()){
+        res.render("game", {isAuthenticated: false, name: null}); 
+    } else {
+        res.render("game", {isAuthenticated: true, name: req.user.name});
+    }
 });
 
 var text = "empty";
@@ -123,9 +143,41 @@ app.get("/read", function(req, res){
     if(text === "empty"){
         res.redirect("/upload");
     } else {
-        res.render("viewer", {text: text});
+        if(!req.isAuthenticated()){
+            res.render("viewer", 
+            {isAuthenticated: false, name: null, text: text}); 
+        } else {
+            res.render("viewer", 
+            {isAuthenticated: false, name: null, text: text}); 
+        }
     }
 }); 
+
+app.get("/logout", function(req, res){
+    req.logout();
+    res.redirect("/");
+});
+
+app.post("/register", function(req, res){
+    User.register(new User({username: req.body.username, name:req.body.name}), req.body.password, function(err, user){
+        if(err){
+            console.log(err);
+            return res.render("register");
+        }
+        passport.authenticate("local")(req, res, function(){
+            res.redirect("/");
+        });
+    });
+});
+
+app.post("/login", passport.authenticate("local",{
+    successRedirect: "/",
+    failureRedirect: "/login"
+}), function(req, res){
+    
+});
+
+
 
 app.listen(3000, function(){
     console.log("Server running on port 3000");
