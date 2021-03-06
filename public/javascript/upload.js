@@ -25,14 +25,16 @@ $("#h1-upload").click(function(){
     }
 });
 
-$("#input-index").change(function() {
+$("#input-upload").change(function() {
     const fileName = $(this).val();
     const extension = fileName.split(".")[fileName.split(".").length-1];
+    console.log(extension);
     if (extension === "pdf") {
         $("#button-upload").attr("disabled", false);
     } else {
         alert("Please upload a PDF file exclusively");
         $("#input-index").val(null);
+        $("#button-upload").attr("disabled", true);
     }
 });
 

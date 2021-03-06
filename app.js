@@ -13,6 +13,7 @@ const passportLocalMongoose = require("passport-local-mongoose");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
+//const randomSentence = require("./models/sentences");
 const PDFParser = require("./node_modules/pdf2json/PDFParser");
 
 mongoose.connect("mongodb://localhost:27017/userDB", {useNewUrlParser: true});
@@ -53,18 +54,26 @@ passport.use(new GoogleStrategy({
 
 app.get("/", function(req, res){
     if(!req.isAuthenticated()){
-        res.render("index", {isAuthenticated: false, name: null}); 
+        res.render("index", {
+            view: "index",
+            isAuthenticated: false, 
+            name: null
+        }); 
     } else {
-        res.render("index", {isAuthenticated: true, name: req.user.name});
+        res.render("index", {
+            view: "index",
+            isAuthenticated: true, 
+            name: req.user.name
+        });
     } 
 });
 
-app.get("/login", function(req, res){
-    res.render("login"); 
+app.get("/login/:view", function(req, res){
+    res.render("login", {view: req.params.view}); 
 });
 
-app.get("/register", function(req, res){
-    res.render("register"); 
+app.get("/register/:view", function(req, res){
+    res.render("register", {view: req.params.view}); 
 });
 
 app.get("/auth/google", passport.authenticate("google", {
@@ -80,19 +89,60 @@ app.get( "/auth/google/index",
 
 app.get("/upload", function(req, res){
     if(!req.isAuthenticated()){
-        res.render("upload", {isAuthenticated: false, name: null}); 
+        res.render("upload", {
+            view: "upload",
+            isAuthenticated: false, 
+            name: null
+        }); 
     } else {
-        res.render("upload", {isAuthenticated: true, name: req.user.name});
+        res.render("upload", {
+            view: "upload",
+            isAuthenticated: true, 
+            name: req.user.name
+        });
     }
 });
 
 app.get("/game", function(req, res){
     if(!req.isAuthenticated()){
-        res.render("game", {isAuthenticated: false, name: null}); 
+        res.render("game", {
+            view: "game",
+            isAuthenticated: false, 
+            name: null, 
+            points: 0,
+        }); 
     } else {
-        res.render("game", {isAuthenticated: true, name: req.user.name});
+        if(!req.user.points) req.user.points = 0;
+        res.render("game", {
+            view: "game",
+            isAuthenticated: true, 
+            name: req.user.name, 
+            points: req.user.points
+        });
     }
 });
+
+app.post("/game/:points", function(req, res){
+    if(req.isAuthenticated()){
+        User.findOneAndUpdate({_id: (req.user._id)}, 
+            {$set: {points: Number(req.params.points)}}, 
+            function(error, doc){
+                if(error){
+                    console.log(error);
+                }   
+            }
+        );
+    }
+});
+
+/* app.post("/game/sentence", function(req, res){
+    console.log("game sentence");
+    const response = {
+        success: randomSentence()
+    }
+    console.log(JSON.stringify(response));
+    res.end(JSON.stringify(response));
+}); */
 
 var text = "empty";
 app.post("/upload", function(req, res) {
@@ -119,7 +169,7 @@ app.post("/upload", function(req, res) {
                                     if (error) throw error;
                                     console.log(textPath + " was deleted");
                                 }); 
-                                res.redirect("/read");
+                                res.redirect("/viewer");
                             });
                         } else {
                             console.log(error);
@@ -136,19 +186,27 @@ app.post("/upload", function(req, res) {
 });
 app.post("/text", function(req, res){
     text = req.body.text;
-    res.redirect("/read");
+    res.redirect("/viewer");
 });
 
-app.get("/read", function(req, res){
+app.get("/viewer", function(req, res){
     if(text === "empty"){
         res.redirect("/upload");
     } else {
         if(!req.isAuthenticated()){
-            res.render("viewer", 
-            {isAuthenticated: false, name: null, text: text}); 
+            res.render("viewer", {
+                view: "viewer",
+                isAuthenticated: false, 
+                name: null, 
+                text: text
+            }); 
         } else {
-            res.render("viewer", 
-            {isAuthenticated: true, name: req.user.name, text: text}); 
+            res.render("viewer", {
+                view: "viewer",
+                isAuthenticated: true, 
+                name: req.user.name, 
+                text: text
+            }); 
         }
     }
 }); 
@@ -158,23 +216,37 @@ app.get("/logout", function(req, res){
     res.redirect("/");
 });
 
-app.post("/register", function(req, res){
-    User.register(new User({username: req.body.username, name:req.body.name}), req.body.password, function(err, user){
+app.post("/login/:view", 
+        passport.authenticate("local",{failureRedirect: "/login"}),
+        function(req, res){
+            if(req.params.view === "viewer"){
+                res.redirect("/upload");
+            } else {
+                res.redirect("/"+req.params.view);
+            }
+        }
+);
+
+app.post("/register/:view", function(req, res){
+    User.register(
+        new User({
+            username: req.body.username, 
+            name:req.body.name, 
+            points: 0
+        }), 
+        req.body.password, function(err, user){
         if(err){
             console.log(err);
             return res.render("register");
         }
         passport.authenticate("local")(req, res, function(){
-            res.redirect("/");
+            if(req.params.view === "viewer"){
+                res.redirect("/upload");
+            } else {
+                res.redirect("/"+req.params.view);
+            }
         });
     });
-});
-
-app.post("/login", passport.authenticate("local",{
-    successRedirect: "/",
-    failureRedirect: "/login"
-}), function(req, res){
-    
 });
 
 app.listen(3000, function(){

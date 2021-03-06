@@ -5,8 +5,10 @@
     <!-- Nav Bar -->
     <% if(!isAuthenticated) { %>
       <%- include("partials/nav-unsigned") %>
+      <span id="is-signed" style="display: none;">unsigned</span>
     <% } else { %>
       <%- include("partials/nav-signed") %>
+      <span id="is-signed" style="display: none;">signed</span>
     <% } %>
     <!-- Title -->
     <div class="row title-row">
@@ -20,7 +22,9 @@
 </section>
 
 <section id="section-game">
-  <h2 id="h2-points">Points: 0</h2><br>
+  <h2 id="h2-points">Points: <span id="user-points">
+    <%= points %>
+  </span></h2><br>
   <div id="radio-group-game-type" class="btn-group radio-group" role="group" aria-label="Basic radio toggle button group">
     <input type="radio" class="btn-check" name="btnradio" id="btn-word" autocomplete="off" value="word" checked>
     <label class="btn btn-outline-dark" for="btn-word">Word</label>
@@ -43,7 +47,9 @@
           <textarea class="form-control" id="text-area-answer" rows="2" placeholder="Let's check what you pretend to catch"></textarea>
         </div>
         <div class="col-2 nopadding">
-          <button id="btn-check" class="btn">CHECK</button>
+            <button id="btn-check" class="btn" type="submit">CHECK</button>
+            
+          
         </div>
       </div>
     </div>
@@ -54,17 +60,7 @@
   </div>
 </section>
 
-<footer id="footer">
-  <div class="socials">
-    <a class="socials-link" href="mailto:zineddine.bettouche.inbox@gmail.com">Gmail</a>
-    <a class="socials-link" target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/zineddine.bettouche">Facebook</a>
-    <a class="socials-link" target="_blank" rel="noopener noreferrer" href="https://www.twitter.com/ZineddineBtc">Twitter</a>
-    <a class="socials-link" target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/zneddine-bettouche">LinkedIn</a>
-    <a class="socials-link"target="_blank" rel="noopener noreferrer" href="https://www.github.com/ZineddineBtc">GitHub</a>
-  </div>
-  <p id="copyright">© Copyright 2021 Zineddine Bettouche</p>
-
-</footer>
+<%- include("partials/social-links") %>
 
 <!-- jQuery CDN -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

@@ -1,10 +1,10 @@
 <%- include("partials/header") %>
 
 <div class="div-container">
-    <h1 class="display-2" style="margin-bottom: 7%;">U-Read Bolt</h1>
+    <h1 class="display-2" style="margin-bottom: 4%;">U-Read Bolt</h1>
     <div class="sign-form">
         <h1 style="margin-bottom: 15%; color: #fff;">Register</h1>
-        <form action="/register" method="post">
+        <form action=<%= "/register/" + view %> method="post">
             <input name="name" type="text" id="input-name" class="form-control" placeholder="Name" required autofocus>
             <input name="username" type="email" id="input-email-register" class="form-control" placeholder="Email address" required>
             <input name="password" type="password" class="form-control input-password" placeholder="Password" required>
@@ -16,6 +16,7 @@
             Register with Google
         </a>
     </div>
+    <a href=<%= "/login/" + view %> style="margin-top: 3%; text-decoration: none">You already have an account? Login now!</a>
 </div>
 
 <%- include("partials/footer") %>
