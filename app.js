@@ -14,9 +14,9 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
 //const randomSentence = require("./models/sentences");
-var PDFParser;// = require("./pdf2json/PDFParser");
+var PDFParser = require("./pdf2json/PDFParser");
 
-mongoose.connect("mongodb://localhost:27017/userDB", {useNewUrlParser: true});
+mongoose.connect("mongodb+srv://admin-zineddine:adminpassword@u-read-bolt-users.s5w0z.mongodb.net/userDB", {useNewUrlParser: true});
 mongoose.set("useCreateIndex", true);
 
 const app = express();
@@ -53,6 +53,10 @@ passport.use(new GoogleStrategy({
 ));
 
 app.get("/", function(req, res){
+    res.redirect("/index");
+});
+
+app.get("/index", function(req, res){
     if(!req.isAuthenticated()){
         res.render("index", {
             view: "index",
@@ -81,7 +85,7 @@ app.get("/auth/google", passport.authenticate("google", {
              'https://www.googleapis.com/auth/userinfo.email']
 }));
 
-app.get( "/auth/google/index",
+app.get("/auth/google/index",
     passport.authenticate( "google", {
         successRedirect: "/",
         failureRedirect: "/login"
@@ -211,9 +215,9 @@ app.get("/viewer", function(req, res){
     }
 }); 
 
-app.get("/logout", function(req, res){
+app.get("/logout/:view", function(req, res){
     req.logout();
-    res.redirect("/");
+    res.redirect("/"+req.params.view);
 });
 
 app.post("/login/:view", 
