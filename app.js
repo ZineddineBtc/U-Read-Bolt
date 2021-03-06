@@ -14,7 +14,7 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
 //const randomSentence = require("./models/sentences");
-const PDFParser = require("./pdf2json/PDFParser");
+const PDFParser;// = require("./pdf2json/PDFParser");
 
 mongoose.connect("mongodb://localhost:27017/userDB", {useNewUrlParser: true});
 mongoose.set("useCreateIndex", true);
