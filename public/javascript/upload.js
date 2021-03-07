@@ -6,9 +6,11 @@ $("#h1-text").click(function(){
         upload = false;
         $(this).css("color", "#000");
         $("#textarea-index").attr("disabled", false);
+        $("#button-read").attr("disabled", false);
         $("#textarea-index").css("background-color", "#212529");
         $("#h1-upload").css("color", "#6f7275");
         $("#input-upload").attr("disabled", true);
+        $("#button-upload").attr("disabled", true);
         $("#input-upload").css("background-color", "#6f7275");
     }
 });
@@ -18,9 +20,11 @@ $("#h1-upload").click(function(){
         upload = true;
         $(this).css("color", "#000");
         $("#input-upload").attr("disabled", false);
+        $("#button-upload").attr("disabled", false);
         $("#input-upload").css("background-color", "#212529");
         $("#h1-text").css("color", "#6f7275");
         $("#textarea-index").attr("disabled", true);
+        $("#button-read").attr("disabled", true);
         $("#textarea-index").css("background-color", "#6f7275");
     }
 });
