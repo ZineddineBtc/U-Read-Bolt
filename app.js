@@ -153,12 +153,11 @@ app.post("/upload", function(req, res) {
     if (!req.files || Object.keys(req.files).length === 0) {
       return res.status(400).send("No files were uploaded.");
     }
-    const uploadedFile = req.files.uploadedFile;
+    const uploadedFile = req.files.file;
     var uploadPath = __dirname +"/uploads/" + uploadedFile.name;
     // Use the mv() method to place the file somewhere on server
     uploadedFile.mv(uploadPath, function(error) {
         if (error) return res.send(error);//res.status(500).send("ERROR");
-        
         const textPath = __dirname + "/public/F1040EZ.txt"
         let pdfParser = new PDFParser(this, 1); 
         pdfParser.on("pdfParser_dataError", errorData => console.error(errorData.parserError));
