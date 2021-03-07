@@ -15,7 +15,8 @@ const User = require("./models/user");
 //const randomSentence = require("./models/sentences");
 var PDFParser = require("pdf2json/pdfparser");
 
-mongoose.connect("mongodb+srv://admin-zineddine:adminpassword@u-read-bolt-users.s5w0z.mongodb.net/userDB", {useNewUrlParser: true});
+mongoose.connect("mongodb+srv://admin-zineddine:adminpassword@u-read-bolt-users.s5w0z.mongodb.net/MyDatabase", 
+                {useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.set("useCreateIndex", true);
 
 const app = express();
@@ -34,7 +35,6 @@ app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-
 passport.use(new GoogleStrategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
@@ -50,6 +50,7 @@ passport.use(new GoogleStrategy({
         }, function (err, user) {return done(err, user);});
   }
 ));
+
 
 app.get("/", function(req, res){
     res.redirect("/index");
@@ -88,7 +89,7 @@ app.get("/auth/google/index",
     passport.authenticate( "google", {
         successRedirect: "/",
         failureRedirect: "/login"
-}));
+})); 
 
 app.get("/upload", function(req, res){
     if(!req.isAuthenticated()){
@@ -153,14 +154,12 @@ app.post("/upload", function(req, res) {
       return res.status(400).send("No files were uploaded.");
     }
     const uploadedFile = req.files.uploadedFile;
-    var uploadPath = "https://u-read-bolt.herokuapp.com/"+ __dirname +"/uploads/" + uploadedFile.name;
-    uploadPath.replace(" ", "-");
+    var uploadPath = __dirname +"/uploads/" + uploadedFile.name;
     // Use the mv() method to place the file somewhere on server
     uploadedFile.mv(uploadPath, function(error) {
-        if (error){
-            return res.status(500).send("ERROR");
-        } 
-        const textPath = "https://u-read-bolt.herokuapp.com/"+ __dirname + "/public/F1040EZ.txt"
+        if (error) return res.send(error);//res.status(500).send("ERROR");
+        
+        const textPath = __dirname + "/public/F1040EZ.txt"
         let pdfParser = new PDFParser(this, 1); 
         pdfParser.on("pdfParser_dataError", errorData => console.error(errorData.parserError));
         pdfParser.on("pdfParser_dataReady", 
@@ -186,7 +185,6 @@ app.post("/upload", function(req, res) {
                         console.log(uploadPath + " was deleted");
                     });
                 }
-                
             }
         );
         pdfParser.loadPDF(uploadPath);
