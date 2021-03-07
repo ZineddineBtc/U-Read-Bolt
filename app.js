@@ -153,7 +153,7 @@ app.post("/upload", function(req, res) {
       return res.status(400).send("No files were uploaded.");
     }
     const uploadedFile = req.files.uploadedFile;
-    var uploadPath = __dirname + "/public/uploads/" + uploadedFile.name;
+    var uploadPath = __dirname + "/uploads/" + uploadedFile.name;
     uploadPath.replace(" ", "-");
     // Use the mv() method to place the file somewhere on server
     uploadedFile.mv(uploadPath, function(error) {
