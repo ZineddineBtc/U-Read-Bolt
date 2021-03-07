@@ -174,16 +174,7 @@ function byWord(sentence) {
         var wordsArray = sentence.split(" ");
         var m= wordsArray[index];
         $("#game-middle").text(m);
-        if(m[m.length-1] == "."){
-            clearInterval(wordInterval);
-            setTimeout({sentence: sentence}, byWord, 2*speed);
-        } else if(m[m.length-1] == "," || 
-                  m[m.length-1] == ";" ||
-                  m[m.length-1] == ":" ) {
-            clearInterval(wordInterval);
-            setTimeout(byWord, speed);
-        }
-        if(index < wordsArray.length-1) {
+        if(index < wordsArray.length) {
             index++;
         } else {
             index = 0;
