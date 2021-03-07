@@ -172,11 +172,17 @@ function byWord(sentence) {
     var index = 0;
     const wordInterval = window.setInterval(function(){
         var wordsArray = sentence.split(" ");
-        var m="";
-        m = wordsArray[index];
-        
+        var m= wordsArray[index];
         $("#game-middle").text(m);
-
+        if(m[m.length-1] == "."){
+            clearInterval(wordInterval);
+            setTimeout({sentence: sentence}, byWord, 2*speed);
+        } else if(m[m.length-1] == "," || 
+                  m[m.length-1] == ";" ||
+                  m[m.length-1] == ":" ) {
+            clearInterval(wordInterval);
+            setTimeout(byWord, speed);
+        }
         if(index < wordsArray.length-1) {
             index++;
         } else {
@@ -273,6 +279,7 @@ function checkAnswer() {
 function answerCorrect(sim){
     $("#h2-result").css("background-color", "#5cb85c");
     points = Number(points) + Number(sim.toFixed(1));
+    points = points.toFixed(1);
     $("#user-points").text(points);
     if(isSigned) postPointsToServer(points);
     getRandomSentence();
