@@ -7,7 +7,6 @@ const fileUpload = require("express-fileupload");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const mongoose = require("mongoose");
-const findOrCreate = require("mongoose-findorcreate");
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
