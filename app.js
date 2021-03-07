@@ -163,7 +163,8 @@ app.post("/upload", function(req, res) {
         pdfParser.on("pdfParser_dataError", errorData => console.error(errorData.parserError));
         pdfParser.on("pdfParser_dataReady", 
             pdfData => {
-                fs.writeFile(textPath, pdfParser.getRawTextContent(),
+                const myWriteFunction = async (textPath) => {
+                    await fs.writeFile(textPath, pdfParser.getRawTextContent(),
                     function(error, result){
                         if(!error){
                             fs.readFile(textPath, 'utf8', function(error, contents) {
@@ -177,11 +178,13 @@ app.post("/upload", function(req, res) {
                         } else {
                             console.log(error);
                         }
-                }); 
-                fs.unlink(uploadPath, (error) => {
-                    if (error) throw error;
-                    console.log(uploadPath + " was deleted");
-                });
+                    }); 
+                    fs.unlink(uploadPath, (error) => {
+                        if (error) throw error;
+                        console.log(uploadPath + " was deleted");
+                    });
+                }
+                
             }
         );
         pdfParser.loadPDF(uploadPath);
