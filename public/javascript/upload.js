@@ -10,8 +10,8 @@ $("#h1-text").click(function(){
         $("#textarea-index").css("background-color", "#212529");
         $("#h1-upload").css("color", "#6f7275");
         $("#input-upload").attr("disabled", true);
-        $("#button-upload").attr("disabled", true);
         $("#input-upload").css("background-color", "#6f7275");
+        checkSelectedFile();
     }
 });
 
@@ -24,12 +24,13 @@ $("#h1-upload").click(function(){
         $("#input-upload").css("background-color", "#212529");
         $("#h1-text").css("color", "#6f7275");
         $("#textarea-index").attr("disabled", true);
-        $("#button-read").attr("disabled", true);
         $("#textarea-index").css("background-color", "#6f7275");
+        checkTextArea();
     }
 });
 
-$("#input-upload").change(function() {
+$("#input-upload").change(checkSelectedFile);
+function checkSelectedFile() {
     const fileName = $(this).val();
     const extension = fileName.split(".")[fileName.split(".").length-1];
     console.log(extension);
@@ -40,12 +41,13 @@ $("#input-upload").change(function() {
         $("#input-index").val(null);
         $("#button-upload").attr("disabled", true);
     }
-});
+}
 
-$("#textarea-index").bind("input propertychange", function() {
+$("#textarea-index").bind("input propertychange", checkTextArea);
+function checkTextArea() {
     if($(this).val().length>0) {
         $("#button-read").attr("disabled", false);
     } else {
         $("#button-read").attr("disabled", true);
     }
-});
+}

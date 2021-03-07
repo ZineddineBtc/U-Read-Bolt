@@ -38,7 +38,7 @@ passport.deserializeUser(User.deserializeUser());
 passport.use(new GoogleStrategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/index",
+    callbackURL: "/auth/google/index",
     passReqToCallback: true,
     userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
 },
