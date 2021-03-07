@@ -154,11 +154,10 @@ app.post("/upload", function(req, res) {
       return res.status(400).send("No files were uploaded.");
     }
     const uploadedFile = req.files.file;
-    var uploadPath = "https://git.heroku.com/u-read-bolt.git/"+ __dirname +"/uploads/" + uploadedFile.name;
+    var uploadPath = __dirname +"/" + uploadedFile.name;
     // Use the mv() method to place the file somewhere on server
     uploadedFile.mv(uploadPath, function(error) {
         if (error) return res.status(500).send(error);
-        
         const textPath = __dirname + "/public/F1040EZ.txt"
         let pdfParser = new PDFParser(this, 1); 
         pdfParser.on("pdfParser_dataError", errorData => console.error(errorData.parserError));
