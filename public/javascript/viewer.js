@@ -114,6 +114,12 @@ function byLights() {
         $("#span-middle").text(m);
         $("#span-after").text(a);
         
+        if(m[m.length-1] == "," || m[m.length-1] == ";" 
+                                || m[m.length-1] == ":" ) {
+            clearInterval(wordInterval);
+            setTimeout(byLights, speed);
+        }
+
         if(sentenceWordIndex < wordsArray.length-1){
             sentenceWordIndex++;
         } else {
