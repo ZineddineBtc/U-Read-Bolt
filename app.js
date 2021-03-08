@@ -14,6 +14,7 @@ const LocalStrategy = require("passport-local");
 const User = require("./models/user");
 //const randomSentence = require("./models/sentences");
 var PDFParser = require("pdf2json/pdfparser");
+const nodemailer = require("nodemailer");
 
 mongoose.connect("mongodb+srv://admin-zineddine:adminpassword@u-read-bolt-users.s5w0z.mongodb.net/MyDatabase", 
                 {useNewUrlParser: true, useUnifiedTopology: true });
@@ -51,6 +52,13 @@ passport.use(new GoogleStrategy({
   }
 ));
 
+const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "feedback.ureadbolt@gmail.com",
+      pass: "Ualwaysreadbolt@2506"
+    }
+});
 
 app.get("/", function(req, res){
     res.redirect("/index");
@@ -212,6 +220,63 @@ app.get("/viewer", function(req, res){
             }); 
         }
     }
+}); 
+
+app.get("/feedback", function(req, res){
+    if(!req.isAuthenticated()){
+        res.render("feedback", {
+            view: "feedback",
+            isAuthenticated: false, 
+            name: null
+        }); 
+    } else {
+        res.render("feedback", {
+            view: "feedback",
+            isAuthenticated: true, 
+            name: req.user.name
+        }); 
+    }
+    
+}); 
+
+app.post("/feedback", function(req, res){
+    let mailBody;
+    if(req.isAuthenticated) {
+        mailBody = "Username: "+ req.user.username + "\n" +
+                   "Name: "+ req.user.name + "\n";
+    }
+    mailBody += req.body.feedbackDescription;
+    const mailOptions = {
+        from: "feedback.ureadbolt@gmail.com",
+        to: "feedback.ureadbolt@gmail.com",
+        subject: req.body.feedbackTitle,
+        text: mailBody
+    };  
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error){
+            console.log(error);
+        } else {
+            console.log("Email sent: " + info.response);  
+            res.redirect("/feedback-sent");
+        }
+    });
+});
+
+app.get("/feedback-sent", function(req, res){
+    if(!req.isAuthenticated()){
+        res.render("feedback-sent", {
+            view: "feedback-sent",
+            isAuthenticated: false, 
+            name: null
+        }); 
+    } else {
+        res.render("feedback-sent", {
+            view: "feedback-sent",
+            isAuthenticated: true, 
+            name: req.user.name
+        }); 
+    }
+    
 }); 
 
 app.get("/logout/:view", function(req, res){
