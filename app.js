@@ -241,9 +241,11 @@ app.get("/feedback", function(req, res){
 
 app.post("/feedback", function(req, res){
     let mailBody;
-    if(req.isAuthenticated) {
+    if(req.isAuthenticated()) {
         mailBody = "Username: "+ req.user.username + "\n" +
                    "Name: "+ req.user.name + "\n";
+    } else {
+        mailBody = "No Username, no name \n";
     }
     mailBody += req.body.feedbackDescription;
     const mailOptions = {
