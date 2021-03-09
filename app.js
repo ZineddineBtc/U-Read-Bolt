@@ -286,16 +286,22 @@ app.get("/logout/:view", function(req, res){
     res.redirect("/"+req.params.view);
 });
 
-app.post("/login/:view", 
-        passport.authenticate("local",{failureRedirect: "/login"}),
-        function(req, res){
+app.post("/login/:view", function(req, res, next) {
+    passport.authenticate("local", function(error, user, info) {
+        if (error) return next(error); 
+        if (!user) return res.redirect("/login/"+req.params.view); 
+        
+        req.logIn(user, function(error) {
+            if (error) return next(error); 
+            
             if(req.params.view === "viewer"){
-                res.redirect("/upload");
+                return res.redirect("/upload");
             } else {
-                res.redirect("/"+req.params.view);
+                return res.redirect("/"+req.params.view);
             }
-        }
-);
+        });
+    })(req, res, next);
+  });
 
 app.post("/register/:view", function(req, res){
     User.register(
