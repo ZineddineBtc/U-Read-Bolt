@@ -301,7 +301,7 @@ app.post("/login/:view", function(req, res, next) {
             }
         });
     })(req, res, next);
-  });
+});
 
 app.post("/register/:view", function(req, res){
     User.register(
